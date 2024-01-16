@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Resources\ProductDtoResource;
 
 class ProductController extends Controller
@@ -65,7 +66,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = new Product([
+            'name' => $request->name,
+            'price' => $request->price,
+            'image' => $request->image,
+            'description' => $request->description
+        ]);
+
+        $product->save();
+        $product->refresh();
+
+        return response()->json(new ProductDtoResource($product), Response::HTTP_CREATED);
     }
 
     /**
@@ -142,7 +153,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $product->update([
+            'name' => $request->name,
+            'price' => $request->price,
+            'image' => $request->image,
+            'description' => $request->description
+        ]);
+
+        return response()->json(new ProductDtoResource($product), Response::HTTP_OK);
     }
 
     /**
