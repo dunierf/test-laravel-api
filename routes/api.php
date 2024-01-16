@@ -27,3 +27,6 @@ Route::apiResources([
     'roles'     => App\Http\Controllers\RoleController::class
 ], ['only' => ['index', 'show']]);
 
+Route::apiResources([
+    'users' => App\Http\Controllers\UserController::class
+]);

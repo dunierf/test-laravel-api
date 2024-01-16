@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\RoleDtoResource;
 
 /**
  * @OA\Schema(
@@ -28,6 +29,7 @@ class UserDtoResource extends JsonResource
             'id'    => $this->id,
             'name'  => $this->name,
             'email' => $this->email,
+            'roles' => RoleDtoResource::collection($this->roles)
         ];
     }
 }
