@@ -9,14 +9,14 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/auth": {
+        "/api/auth/login": {
             "post": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "Login user",
                 "description": "Login user",
-                "operationId": "a8d85330b96bde8699cb2e66b5be211d",
+                "operationId": "8dcb70df1020986038d098cc08d05dae",
                 "requestBody": {
                     "description": "Object",
                     "required": true,
@@ -24,13 +24,13 @@
                         "application/json": {
                             "schema": {
                                 "properties": {
-                                    "username": {
+                                    "email": {
                                         "type": "string",
-                                        "example": "root"
+                                        "example": "user@domain.com"
                                     },
                                     "password": {
                                         "type": "string",
-                                        "example": "UserPass2024"
+                                        "example": "password"
                                     }
                                 },
                                 "type": "object"
@@ -71,7 +71,7 @@
                 ],
                 "summary": "Logout user",
                 "description": "Logout user",
-                "operationId": "f592689e3a2866372e1cb022bfa756cb",
+                "operationId": "32ca9dac03fa70fa3efe200225b24073",
                 "responses": {
                     "204": {
                         "description": "No Content"

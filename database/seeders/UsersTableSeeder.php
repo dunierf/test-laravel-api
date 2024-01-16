@@ -20,7 +20,8 @@ class UsersTableSeeder extends Seeder
             'id'	     => 1,
             'name'	     => 'Admin',
             'email'      => 'dunierf@gmail.com',
-            'password' => Hash::make('password')
+            'password'          => Hash::make('password'),
+            'email_verified_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);
 
         $root->save();
