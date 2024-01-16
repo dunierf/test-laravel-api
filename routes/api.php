@@ -28,6 +28,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // Logout
     Route::delete('auth/logout', [App\Http\Controllers\AuthController::class, 'logout']);
 
+    // Get roles
+    Route::get('auth/roles', [App\Http\Controllers\AuthController::class, 'roles']);
+
     // Manager
     Route::middleware('role:manager')->group(function () {
 
