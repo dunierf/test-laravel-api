@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Resources\UserDtoResource;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -166,7 +167,41 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $rules = [];
+
+        if (!is_null($request->password))
+            $rules['password'] = 'required|string|min:8|max:255';
+
+        if (strcasecmp($user->email, $request->email))
+            $rules['email'] = 'unique:users,email';
+
+        if (count($rules))
+        {
+            $validator = Validator::make($request->all(), $rules);
+            $validator->validate();
+        }
+
+        if (is_null($request->password))
+        {
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email
+            ]);
+        }
+        else
+        {
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password)
+            ]);
+        }
+
+        $user->save();
+        $user->roles()->sync(collect($request->roles)->pluck('id'));
+        $user->refresh();
+
+        return response()->json(new UserDtoResource($user), Response::HTTP_OK);
     }
 
     /**
