@@ -247,7 +247,17 @@ class UserController extends Controller
      */
     public function password(Request $request, User $user)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'password'      => 'required|string|min:8|max:255'
+        ]);
+
+        $validator->validate();
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+        $user->refresh();
+
+        return response()->json(new UserDtoResource($user), Response::HTTP_OK);
     }
 
     /**

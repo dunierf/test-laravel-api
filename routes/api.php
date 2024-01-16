@@ -57,6 +57,9 @@ Route::middleware('auth:sanctum')->group(function () {
             ], ['only' => ['store', 'update']]);
         });
 
+        // Update user's password
+        Route::put('users/{user}/password', [App\Http\Controllers\UserController::class, 'password']);
+
         // Delete users, products
         Route::apiResources([
             'users'        => App\Http\Controllers\UserController::class,
