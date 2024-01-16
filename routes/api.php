@@ -50,9 +50,13 @@ Route::middleware('auth:sanctum')->group(function () {
             ], ['only' => ['store', 'update']]);
         });
 
+        // Delete a user
+        Route::delete('users/{user}', [App\Http\Controllers\UserController::class, 'destroy']);
+
+        /*
         // Products
         Route::apiResources([
             'products'     => App\Http\Controllers\ProductController::class
-        ], ['only' => ['store', 'update']]);
+        ], ['only' => ['store', 'update']]);*/
     });
 });
