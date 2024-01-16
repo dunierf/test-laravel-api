@@ -25,6 +25,9 @@ Route::apiResources([
 // Auth needed
 Route::middleware('auth:sanctum')->group(function () {
 
+    // Logout
+    Route::delete('auth/logout', [App\Http\Controllers\AuthController::class, 'logout']);
+
     // Manager
     Route::middleware('role:manager')->group(function () {
 
