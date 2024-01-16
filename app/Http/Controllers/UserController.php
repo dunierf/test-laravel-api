@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Resources\UserDtoResource;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -71,7 +73,17 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+
+        $user->save();
+        $user->roles()->sync(collect($request->roles)->pluck('id'));
+        $user->refresh();
+
+        return response()->json(new UserDtoResource($user), Response::HTTP_CREATED);
     }
 
     /**
