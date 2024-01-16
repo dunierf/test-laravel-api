@@ -20,6 +20,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 */
 
 Route::apiResources([
+    'products'     => App\Http\Controllers\ProductController::class
+], ['only' => ['index', 'show']]);
+
+Route::apiResources([
     'roles'     => App\Http\Controllers\RoleController::class
 ], ['only' => ['index', 'show']]);
 

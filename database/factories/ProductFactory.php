@@ -18,8 +18,8 @@ class ProductFactory extends Factory
     {
         return [
             'name' => implode(' ', fake()->words(4)),
-            'price' => fake()->numberBetween(10, 250),
-            'url_img' => fake()->imageUrl(640, 480, 'product', true),
+            'price' => fake()->randomFloat(2, 20, 80),
+            'image' => fake()->imageUrl(640, 480, 'product', true),
             'description' => implode("\n", fake()->paragraphs())
         ];
     }

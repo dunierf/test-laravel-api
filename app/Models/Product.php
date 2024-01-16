@@ -12,7 +12,11 @@ class Product extends Model
     protected $fillable = [
         'name',
         'price',
-        'url_img',
+        'image',
         'description'
+    ];
+
+    protected $casts = [
+        'price' => 'float'
     ];
 }
