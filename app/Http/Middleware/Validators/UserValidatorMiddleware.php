@@ -16,14 +16,21 @@ class UserValidatorMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'name'          => 'required|string|min:1|max:255',
-            'email'         => 'required|string|max:255|email|unique:users,email',
-            'password'      => 'required|string|min:8|max:255',
+            'email'         => 'required|string|max:255|email',
+            'password'      => 'string|min:8|max:255',
             'roles'         => 'array|required',
             'roles.*.id'    => 'required|integer|exists:roles,id'
-        ]);
+        ];
 
+        if ($request->isMethod('post'))
+        {
+            $rules['email'] .= '|unique:users,email';
+            $rules['password'] .= '|required';
+        }
+
+        $validator = Validator::make($request->all(), $rules);
         $validator->validate();
 
         return $next($request);
