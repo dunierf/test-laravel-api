@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
+use App\Exceptions\AuthenticationFailedException;
 
 class AuthController extends Controller
 {
     /**
      * @OA\Post(
-     *      path="/api/auth",
+     *      path="/api/auth/login",
      *      tags={"Auth"},
      *      summary="Login user",
      *      description="Login user",
@@ -17,8 +20,8 @@ class AuthController extends Controller
      *          required=true,
      *          description="Object",
      *          @OA\JsonContent(
-     *              @OA\Property(property="username", type="string", example="root"),
-     *              @OA\Property(property="password", type="string", example="UserPass2024")
+     *              @OA\Property(property="email", type="string", example="user@domain.com"),
+     *              @OA\Property(property="password", type="string", example="password")
      *          )
      *      ),
      *      @OA\Response(
@@ -44,12 +47,19 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        //
+        $user = User::where('email', $request->email)->first();
+
+        if (is_null($user) || (!Hash::check($request->password, $user->password)))
+            throw new AuthenticationFailedException();
+
+        return response()->json([
+            'token' => $user->createToken('token')->plainTextToken
+        ], Response::HTTP_CREATED);
     }
 
     /**
      * @OA\Delete(
-     *      path="/api/auth",
+     *      path="/api/auth/login",
      *      tags={"Auth"},
      *      summary="Logout user",
      *      description="Logout user",

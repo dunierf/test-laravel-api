@@ -12,21 +12,30 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "api" middleware group. Make something great!
 |
-
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 */
+
+// Public endpoints
+Route::post('auth/login', [App\Http\Controllers\AuthController::class, 'login'])->middleware('login');
 
 Route::apiResources([
     'products'     => App\Http\Controllers\ProductController::class
 ], ['only' => ['index', 'show']]);
 
-Route::apiResources([
-    'roles'     => App\Http\Controllers\RoleController::class
-], ['only' => ['index', 'show']]);
 
-Route::apiResources([
-    'users' => App\Http\Controllers\UserController::class
-]);
+// Auth needed
+Route::middleware('auth:sanctum')->group(function () {
+
+    // Manager
+    Route::middleware('role:manager')->group(function () {
+
+        //Get Roles
+        Route::apiResources([
+            'roles'     => App\Http\Controllers\RoleController::class
+        ], ['only' => ['index', 'show']]);
+
+        //Users
+        Route::apiResources([
+            'users' => App\Http\Controllers\UserController::class
+        ]);
+    });
+});
