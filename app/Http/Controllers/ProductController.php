@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Http\Resources\ProductDtoResource;
 
 class ProductController extends Controller
 {
@@ -29,7 +30,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        return ProductDtoResource::collection(Product::orderBy('name')->get());
     }
 
     /**
@@ -96,7 +97,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return new ProductDtoResource($product);
     }
 
     /**

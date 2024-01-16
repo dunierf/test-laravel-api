@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->index();
             $table->decimal('price')->index();
-            $table->string('url_img')->nullable()->index();
+            $table->string('image')->nullable()->index();
             $table->text('description')->nullable();
             $table->timestamps();
         });
