@@ -28,7 +28,7 @@ class ProductDtoResource extends JsonResource
             'id'     => $this->id,
             'name'   => $this->name,
             'price'  => $this->price,
-            'urlImg' => $this->url_img
+            'image'  => $this->image
         ];
     }
 }
