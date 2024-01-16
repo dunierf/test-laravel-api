@@ -41,11 +41,17 @@ class UserController extends Controller
      *      @OA\RequestBody(
      *          required=true,
      *          description="Object",
-     *          @OA\JsonContent(ref="#/components/schemas/UserDtoResource")
+     *          @OA\JsonContent(
+     *              @OA\Property(property="id", type="int64", example="1"),
+     *              @OA\Property(property="name", type="string", example="Admin"),
+     *              @OA\Property(property="email", type="string", example="user@domain.com"),
+     *              @OA\Property(property="password", type="string", example="UserPass2024"),
+     *              @OA\Property(property="roles", type="array", @OA\Items(ref="#/components/schemas/RoleDtoResource"))
+     *          )
      *      ),
      *      @OA\Response(
      *          response=201,
-     *          description="A collection entry",
+     *          description="Created user",
      *          @OA\JsonContent(ref="#/components/schemas/UserDtoResource")
      *      ),
      *      @OA\Response(
@@ -99,7 +105,99 @@ class UserController extends Controller
         //
     }
 
+    /**
+     * @OA\Put(
+     *      path="/api/users/{id}",
+     *      tags={"Users"},
+     *      summary="Update a user",
+     *      description="Update a user",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer",
+     *              example=1
+     *          )
+     *      ),
+     *      @OA\RequestBody(
+     *          required=true,
+     *          description="Object",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="id", type="int64", example="1"),
+     *              @OA\Property(property="name", type="string", example="Admin"),
+     *              @OA\Property(property="email", type="string", example="user@domain.com"),
+     *              @OA\Property(property="password", type="string", example="UserPass2024"),
+     *              @OA\Property(property="roles", type="array", @OA\Items(ref="#/components/schemas/RoleDtoResource"))
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Updated user",
+     *          @OA\JsonContent(ref="#/components/schemas/UserDtoResource")
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized"
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      )
+     * )
+     */
     public function update(Request $request, User $user)
+    {
+        //
+    }
+
+    /**
+     * @OA\Put(
+     *      path="/api/users/{id}/password",
+     *      tags={"Users"},
+     *      summary="Update user's password",
+     *      description="Update user's password",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer",
+     *              example=1
+     *          )
+     *      ),
+     *      @OA\RequestBody(
+     *          required=true,
+     *          description="Object",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="password", type="string", example="UserPass2024")
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=204,
+     *          description="No Content"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthorized"
+     *      ),
+     *      @OA\Response(
+     *          response=403,
+     *          description="Forbidden"
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Bad Request"
+     *      )
+     * )
+     */
+    public function password(Request $request, User $user)
     {
         //
     }
