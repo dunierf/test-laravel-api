@@ -14,34 +14,45 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Public endpoints
+// ----- Public endpoints -----
+
+// Login
 Route::post('auth/login', [App\Http\Controllers\AuthController::class, 'login'])->middleware('login');
 
+// Get Products
 Route::apiResources([
     'products'     => App\Http\Controllers\ProductController::class
 ], ['only' => ['index', 'show']]);
 
 
-// Auth needed
+// ----- Auth needed -----
 Route::middleware('auth:sanctum')->group(function () {
 
     // Logout
     Route::delete('auth/logout', [App\Http\Controllers\AuthController::class, 'logout']);
 
-    // Get roles
+    // Authed user's roles
     Route::get('auth/roles', [App\Http\Controllers\AuthController::class, 'roles']);
 
-    // Manager
+    // Enpoint for manager
     Route::middleware('role:manager')->group(function () {
 
-        //Get Roles
+        // Get Roles, Users
         Route::apiResources([
-            'roles'     => App\Http\Controllers\RoleController::class
+            'roles'     => App\Http\Controllers\RoleController::class,
+            'users' => App\Http\Controllers\UserController::class
         ], ['only' => ['index', 'show']]);
 
-        //Users
+        // POST, PUT users
+        Route::middleware('user')->group(function () {
+            Route::apiResources([
+                'users' => App\Http\Controllers\UserController::class
+            ], ['only' => ['store', 'update']]);
+        });
+
+        // Products
         Route::apiResources([
-            'users' => App\Http\Controllers\UserController::class
-        ]);
+            'products'     => App\Http\Controllers\ProductController::class
+        ], ['only' => ['store', 'update']]);
     });
 });

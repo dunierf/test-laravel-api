@@ -68,8 +68,8 @@ class Kernel extends HttpKernel
 
         // Api
         'role' => \App\Http\Middleware\HasRoleMiddleware::class,
-        'login' => \App\Http\Middleware\Validators\LoginValidatorMiddleware::class
-
+        'login' => \App\Http\Middleware\Validators\LoginValidatorMiddleware::class,
+        'user' => \App\Http\Middleware\Validators\UserValidatorMiddleware::class
 
     ];
 }
