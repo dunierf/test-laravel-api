@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Resources\UserDtoResource;
 
 class UserController extends Controller
 {
@@ -29,7 +30,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return UserDtoResource::collection(User::orderBy('name')->get());
     }
 
     /**
@@ -102,7 +103,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return new UserDtoResource($user);
     }
 
     /**
