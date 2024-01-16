@@ -83,7 +83,8 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
-        //
+        $request->user()->currentAccessToken()->delete();
+        return response()->json(NULL, Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -108,6 +109,6 @@ class AuthController extends Controller
      */
     public function roles(Request $request)
     {
-        //
+
     }
 }
