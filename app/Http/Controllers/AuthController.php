@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use App\Exceptions\AuthenticationFailedException;
+use App\Http\Resources\RoleDtoResource;
 
 class AuthController extends Controller
 {
@@ -109,6 +110,6 @@ class AuthController extends Controller
      */
     public function roles(Request $request)
     {
-
+        return RoleDtoResource::collection($request->user()->roles);
     }
 }
